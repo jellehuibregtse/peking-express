@@ -19,6 +19,10 @@ budget.
 
 ### Functions
 
+For describing this function we use the following graph.
+
+![test1.png](./tests/test_files/test1.png)
+
 The following functionalities (endpoints) need to be implemented:
 
 - `initializeMap (Json map)` – read the input map, which is provided in the following json structure:
@@ -33,24 +37,24 @@ The following functionalities (endpoints) need to be implemented:
   },
   "connections": {
     "source": [
-      1,
-      1,
+      3,
+      2,
       1,
       2,
       3
     ],
     "target": [
       2,
-      3,
+      1,
       88,
-      3,
+      88,
       88
     ],
     "price": [
-      1,
       3,
       7,
-      1,
+      9,
+      2,
       1
     ]
   }
