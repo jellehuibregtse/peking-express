@@ -1,8 +1,8 @@
 from character import Character
+from graph import Graph
 
 
 class PekingExpress:
-    pekingMap = {}
     budget = 0
     occupiedLocations = []
     currentTurn = 1
@@ -12,8 +12,8 @@ class PekingExpress:
 
     # Read the input map, which is provided in Json format.
     # Initialize the given start_location as the initial position of your character.
-    def __init__(self, m, s, b, o):
-        self.pekingMap = m
+    def __init__(self, jsonMap, s, b, o):
+        self.pekingMap = init_map(jsonMap)
         self.character = Character(s)
         self.budget = b
         self.occupiedLocations = o
@@ -31,9 +31,26 @@ class PekingExpress:
         # TODO: Finish next_move function.
 
     def solve(self):
-        while self.character.location != self.pekingMap['connections']['target'][-1]:
-            self.path = self.path + self.next_move()
-            self.updated_occupied_locations()
+        # TODO: Finish solve
         print(self.occupiedLocations)
         print(self.character.path)
         print(self.pekingMap)
+
+
+def init_map(jsonMap):
+    source = jsonMap['connections']['source']
+    target = jsonMap['connections']['target']
+    price = jsonMap['connections']['price']
+    critical = jsonMap['locations']['critical']
+    n = len(source)
+
+    peking_map = Graph()
+
+    # Populate graph.
+    for i in range(n):
+        peking_map.add_edge(source[i], target[i], price[i])
+
+    for i in critical:
+        peking_map.update_critical(i)
+
+    return peking_map
