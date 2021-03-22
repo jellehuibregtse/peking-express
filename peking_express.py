@@ -17,7 +17,6 @@ class PekingExpress:
         :param b: budget
         :param o: occupied locations.
         """
-        self.solutions = []
         self.pekingMap = init_map(json_map)
         self.character = Character(s)
         self.budget = b
@@ -25,7 +24,8 @@ class PekingExpress:
 
         self.solve()
 
-        print(self.character.path)
+        if(self.character.path[-1] == 88):
+            print(self.character.path)
 
     def updated_occupied_locations(self):
         """
@@ -43,45 +43,36 @@ class PekingExpress:
         """
 
         # Calculate all paths to destination from current location and time.
-        self.calculate_solutions(self.currentTurn, [self.character.path[-1]], self.character.spent)
-
-        # Get the shortest path to the destination from all the paths.
-        shortest = None
-        shortest_budget = 0
-        shortest_path = self.character.path[-1]
-        for s in self.solutions:
-            # If the distance is from solution is shorter than current solution, set shortest solution to solution.
-            if shortest is None or len(s[1]) < shortest:
-                shortest = len(s[1])
-                shortest_path = s[1]
-            # If the distance is from solution is equal to current solution and price is lower, set shortest solution
-            # to solution.
-            elif len(s[1]) == shortest_budget > s[0]:
-                shortest_path = s[1]
+        solution = self.calculate_best_solution((None, None), self.currentTurn, [self.character.path[-1]], self.character.spent)
 
         # Add travel weight to spent.
-        if shortest_path[0] != shortest_path[1]:
-            self.character.spent += self.pekingMap.get_vertex(shortest_path[0]).weight(shortest_path[1])
-
+        if solution[1] != None and solution[1][0] != solution[1][1]:
+            self.character.spent += self.pekingMap.get_vertex(solution[1][0]).weight(solution[1][1])
+        
         # Return next point in shortest path to location.
-        return shortest_path[1]
+        if solution[1] != None:
+            return solution[1][1]
+        
+        else:
+            return None
 
-    def calculate_solutions(self, turn, path, spent):
+    def calculate_best_solution(self, solution, turn, path, spent) -> tuple:
         """
         Calculate solutions.
         :param turn: current turn
         :param path: current path
         :param spent: what part of the budget has already been used.
-        :return:
+        :return: list of all solutions
         """
 
         # If destination reached, add path and amount spent to solutions.
         if path[-1] == 88 and spent < self.budget:
-            self.solutions.append((spent, path))
+            if solution[1] == None or len(path) < len(solution[1]) or (len(solution[1]) == len(path) and solution[0] > spent):
+                solution = (spent, path)
         # Else spent is under budget.
-        elif spent < self.budget:
+        elif spent < self.budget and (solution[1] == None or len(path) < len(solution[1])):
             # Get adjacent vertices.
-            options = list(self.pekingMap.get_vertex(path[-1]).get_neighbours())
+            options = self.pekingMap.get_vertex(path[-1]).get_neighbours()
             # Can stay on same location if any of the next options are occupied and vital.
             if turn <= len(self.occupiedLocations):
                 for o in options:
@@ -93,14 +84,19 @@ class PekingExpress:
                 if turn > len(self.occupiedLocations) or (
                         not (self.pekingMap.get_vertex(o).critical and o in self.occupiedLocations[turn - 1])):
                     price = self.pekingMap.get_vertex(path[-1]).weight(o) if o != path[-1] else 0
-                    self.calculate_solutions(turn + 1, path + [o], spent + price)
+                    solution = self.calculate_best_solution(solution, turn + 1, path + [o], spent + price)
+        return solution
 
     def solve(self):
         """
         Until we research the final node 88, we calculate a next move.
         """
         while self.character.path[-1] != 88:
-            self.character.path += [self.next_move()]
+            next = self.next_move()
+            if next == None:
+                print('Error: no solution found.')
+                break
+            self.character.path += [next]
             self.updated_occupied_locations()
             self.currentTurn += 1
 
@@ -127,9 +123,3 @@ def init_map(json_map):
         peking_map.update_critical(i)
 
     return peking_map
-
-
-if __name__ == "__main__":
-    test = PekingExpress({"locations": {"number": 4, "critical": [3]},
-                          "connections": {"source": [1, 1, 1, 2, 3], "target": [2, 3, 88, 3, 88],
-                                          "price": [1, 3, 7, 1, 1]}}, 1, 5, [[2, 3], [3], [88], [88]])
