@@ -1,4 +1,8 @@
 class Vertex:
+    """
+    A vertex v in V. All neighbours are connected by edges.
+    """
+
     def __init__(self, index, critical=False):
         self.index = index
         self.critical = critical

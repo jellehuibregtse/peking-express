@@ -1,8 +1,9 @@
-import sys
-from peking_express import PekingExpress
-import unittest
-import json
 import ast
+import json
+import sys
+import unittest
+
+from peking_express import PekingExpress
 
 sys.path.append('../')
 
