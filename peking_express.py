@@ -19,6 +19,8 @@ class PekingExpress:
 
         self.solve()
 
+        print(self.character.path)
+
     # After every move of your own, this function should update the currently. Occupied locations on your locally
     # maintained map. This is necessary for the availability checks of the critical locations.
     def updated_occupied_locations(self):
@@ -79,8 +81,6 @@ class PekingExpress:
             self.character.path = self.character.path + [self.next_move()]
             self.updated_occupied_locations()
             self.currentTurn += 1
-        print(self.character.path)
-
 
 def init_map(jsonMap):
     source = jsonMap['connections']['source']
