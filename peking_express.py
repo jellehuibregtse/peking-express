@@ -51,7 +51,7 @@ class PekingExpress:
             self.character.spent += self.pekingMap.get_vertex(solution[1][0]).weight(solution[1][1])
 
         # Return next point in shortest path to location.
-        if solution[1] != None:
+        if solution[1] is not None:
             return solution[1][1]
 
         else:
