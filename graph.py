@@ -2,6 +2,10 @@ from vertex import Vertex
 
 
 class Graph:
+    """
+    Graph data structure G = (V, E). Vertices contain the information about the edges.
+    """
+
     def __init__(self):
         self.vertices = {}
         self.num_vertices = 0
@@ -39,13 +43,3 @@ class Graph:
         for u in self.vertices:
             print(u, "->",
                   " -> ".join(str(f"{v}({self.vertices[u].neighbours[v]})") for v in self.vertices[u].neighbours))
-
-
-if __name__ == "__main__":
-    graph = Graph()
-    graph.add_edge(3, 2, 3)
-    graph.add_edge(2, 1, 7)
-    graph.add_edge(1, 88, 9)
-    graph.add_edge(2, 88, 2)
-    graph.add_edge(3, 88, 1)
-    graph.print_graph()
