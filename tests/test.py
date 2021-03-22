@@ -11,7 +11,10 @@ def read_file(path: str) -> list[str]:
 
 class TestSortFunction(unittest.TestCase):
     def test_can_load_file(self):
-        file = read_file('test_files/test1.txt')
+        file = [
+            '{"locations": {"number": 4, "critical": [3]}, "connections": {"source": [3, 2, 1, 2, 3], "target": [2, '
+            '1, 88, 88, 88], "price": [3, 7, 9, 2, 1]}}',
+            '3', '21', '[[1, 3], [2], [88, 3]]']
         self.assertIsNotNone(PekingExpress(json.loads(file[0]), int(file[1]), int(file[2]), ast.literal_eval(file[3])))
 
 
