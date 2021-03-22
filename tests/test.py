@@ -1,16 +1,18 @@
-import peking_express
+from peking_express import PekingExpress
 import unittest
 import json
 import ast
 
 
+def read_file(path: str) -> list[str]:
+    with open(path, 'r', encoding='utf8') as file:
+        return file.read().split('\n')
+
+
 class TestSortFunction(unittest.TestCase):
-    def test_isSolvable(self):
-        fo = open("test_files/test1.txt", encoding="utf8")
-        text = fo.read().split('\n')
-        fo.close()
-        result = peking_express.PekingExpress(json.loads(text[0]), int(text[1]), int(text[2]), ast.literal_eval(text[3]))
-        self.assertEqual(result, [3, 2, 2, 88, 88])
+    def test_can_load_file(self):
+        file = read_file('./test_files/test1.txt')
+        self.assertIsNotNone(PekingExpress(json.loads(file[0]), int(file[1]), int(file[2]), ast.literal_eval(file[3])))
 
 
 if __name__ == '__main__':

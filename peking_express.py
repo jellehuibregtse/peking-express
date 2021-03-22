@@ -31,9 +31,7 @@ class PekingExpress:
         # TODO: Finish next_move function.
 
     def solve(self):
-        while self.character.location != self.pekingMap['connections']['target'][-1]:
-            self.path = self.path + self.next_move()
-            self.updated_occupied_locations()
+        # TODO: Finish solve
         print(self.occupiedLocations)
         print(self.character.path)
         print(self.pekingMap)
@@ -46,12 +44,13 @@ def init_map(jsonMap):
     critical = jsonMap['locations']['critical']
     n = len(source)
 
-    peking_map = Graph(n)
+    peking_map = Graph()
 
     # Populate graph.
     for i in range(n):
         peking_map.add_edge(source[i], target[i], price[i])
 
-    # TODO: Set critical locations
+    for i in critical:
+        peking_map.update_critical(i)
 
     return peking_map
