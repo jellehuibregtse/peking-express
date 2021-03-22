@@ -1,4 +1,9 @@
-# Peking Express
+<p align="center">
+  <h1 align="center">Peking Express</h1>
+  <h4 align="center">
+  <strong>Jelle Huibregtse and Aron Hemmes</strong>
+  </h4>
+</p>
 
 ## Problem description
 
