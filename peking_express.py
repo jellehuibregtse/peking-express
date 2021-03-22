@@ -24,7 +24,7 @@ class PekingExpress:
 
         self.solve()
 
-        if(self.character.path[-1] == 88):
+        if self.character.path[-1] == 88:
             print(self.character.path)
 
     def updated_occupied_locations(self):
@@ -43,22 +43,24 @@ class PekingExpress:
         """
 
         # Calculate all paths to destination from current location and time.
-        solution = self.calculate_best_solution((None, None), self.currentTurn, [self.character.path[-1]], self.character.spent)
+        solution = self.calculate_best_solution((None, None), self.currentTurn, [self.character.path[-1]],
+                                                self.character.spent)
 
         # Add travel weight to spent.
-        if solution[1] != None and solution[1][0] != solution[1][1]:
+        if solution[1] is not None and solution[1][0] != solution[1][1]:
             self.character.spent += self.pekingMap.get_vertex(solution[1][0]).weight(solution[1][1])
-        
+
         # Return next point in shortest path to location.
         if solution[1] != None:
             return solution[1][1]
-        
+
         else:
             return None
 
     def calculate_best_solution(self, solution, turn, path, spent) -> tuple:
         """
         Calculate solutions.
+        :param solution: the solution
         :param turn: current turn
         :param path: current path
         :param spent: what part of the budget has already been used.
@@ -67,10 +69,11 @@ class PekingExpress:
 
         # If destination reached, add path and amount spent to solutions.
         if path[-1] == 88 and spent < self.budget:
-            if solution[1] == None or len(path) < len(solution[1]) or (len(solution[1]) == len(path) and solution[0] > spent):
+            if solution[1] is None or len(path) < len(solution[1]) or (
+                    len(solution[1]) == len(path) and solution[0] > spent):
                 solution = (spent, path)
         # Else spent is under budget.
-        elif spent < self.budget and (solution[1] == None or len(path) < len(solution[1])):
+        elif spent < self.budget and (solution[1] is None or len(path) < len(solution[1])):
             # Get adjacent vertices.
             options = self.pekingMap.get_vertex(path[-1]).get_neighbours()
             # Can stay on same location if any of the next options are occupied and vital.
@@ -92,11 +95,11 @@ class PekingExpress:
         Until we research the final node 88, we calculate a next move.
         """
         while self.character.path[-1] != 88:
-            next = self.next_move()
-            if next == None:
+            n = self.next_move()
+            if n is None:
                 print('Error: no solution found.')
                 break
-            self.character.path += [next]
+            self.character.path += [n]
             self.updated_occupied_locations()
             self.currentTurn += 1
 

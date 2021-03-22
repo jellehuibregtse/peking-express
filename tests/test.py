@@ -1,11 +1,9 @@
 import ast
 import json
-import sys
 import unittest
 
-sys.path.append('../')
-
 from peking_express import PekingExpress
+
 
 def read_file(path: str) -> list[str]:
     with open(path, 'r', encoding='utf8') as file:
@@ -15,7 +13,8 @@ def read_file(path: str) -> list[str]:
 class TestSortFunction(unittest.TestCase):
     def test_can_load_file(self):
         file = [
-            '{"locations": {"number": 4, "critical": [3]}, "connections": {"source": [1, 1, 1, 2, 3], "target": [2, 3, 88, 3, 88], "price": [1, 3, 7, 1, 1]}}',
+            '{"locations": {"number": 4, "critical": [3]}, "connections": {"source": [1, 1, 1, 2, 3], "target": [2, '
+            '3, 88, 3, 88], "price": [1, 3, 7, 1, 1]}}',
             '1', '5', '[[2, 3], [3], [88], [88]]']
         self.assertIsNotNone(PekingExpress(json.loads(file[0]), int(file[1]), int(file[2]), ast.literal_eval(file[3])))
 
