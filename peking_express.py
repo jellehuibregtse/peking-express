@@ -102,6 +102,12 @@ class PekingExpress:
     def get_path(self):
         return self.character.path
 
+    def get_path_weight(self):
+        return sum([self.pekingMap.get_vertex(i).weight(i + 1) for i in range(len(self.get_path()))])
+
+    def get_path_length(self):
+        return len(self.get_path())
+
 
 def read_file(path: str) -> list[str]:
     with open(path, 'r', encoding='utf8') as file:
