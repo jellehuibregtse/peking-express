@@ -51,8 +51,7 @@ class PekingExpress:
         if solution[1] is not None:
             return solution[1][1]
 
-        else:
-            return None
+        return None
 
     def calculate_best_solution(self, solution, turn, path, spent) -> tuple:
         """
