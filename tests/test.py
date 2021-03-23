@@ -16,8 +16,11 @@ class TestSortFunction(unittest.TestCase):
 
         self.file1 = [
             '{"locations": {"number": 4, "critical": [3]}, "connections": {"source": [1, 1, 1, 2, 3], "target": [2, '
-            '3, 88, 3, 88], "price": [1, 3, 7, 1, 1]}}',
-            '1', '5', '[[2, 3], [3], [88], [88]]']
+            '3, 88, 3, 88], "price": [1, 3, 7, 1, 1]}}', '3', '21', '[[2, 3], [3], [88], [88]]']
+
+        self.file1_alternative = [
+            '{"locations": {"number":4, "critical":[3]}, "connections": {"source": [1, 1, 1, 2, 3],"target": [2, 3, '
+            '88, 3, 88],"price": [1, 3, 7, 1, 1]}}', '1', '5', '[[2,3],[3],[88],[88]]']
 
         self.file2 = [
             '{"locations": {"number": 10, "critical": [7, 6, 3]}, "connections": {"source": [2, 7, 3, 1, 9, 4, 6, 8, '
@@ -63,6 +66,28 @@ class TestSortFunction(unittest.TestCase):
         self.assertIsNotNone(graph, "Graph gets initialized.")
         self.assertEqual(vertices, [1, 2, 3, 88], "Graph should contain vertices [1, 2, 3, 88].")
         self.assertTrue(critical_vertex, "Vertex with index 3 should be a critical vertex.")
+
+    def test_path_length_test_file1(self):
+        peking1 = load_peking_from_file(self.file1)
+
+        length = peking1.get_path_length()
+
+        self.assertEqual(2, length, "The length of the path should be 2.")
+
+    def test_path_test_file1_alternative(self):
+        peking1 = load_peking_from_file(self.file1_alternative)
+        graph = peking1.pekingMap
+
+        vertices = list(graph.get_vertices())
+        critical_vertex = graph.get_vertex(3).critical
+        length = peking1.get_path_length()
+
+        self.assertIsNotNone(graph, "Graph gets initialized.")
+        self.assertEqual(vertices, [1, 2, 3, 88], "Graph should contain vertices [1, 2, 3, 88].")
+        self.assertTrue(critical_vertex, "Vertex with index 3 should be a critical vertex.")
+        self.assertEqual(1, peking1.get_path()[0], "Peking start location should be 1.")
+        self.assertEqual(5, peking1.budget, "Peking budget should be 5.")
+        self.assertEqual(5, length, "The length of the path should be 5.")
 
     def test_can_initialize_graph_test_file2(self):
         peking2 = load_peking_from_file(self.file2)
