@@ -22,8 +22,6 @@ class PekingExpress:
         self.budget = b
         self.occupiedLocations = o
 
-        self.solve()
-
     def updated_occupied_locations(self):
         """
         After every move of your own, update the currently occupied locations, by adding your move.
