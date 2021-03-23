@@ -45,8 +45,7 @@ class TestSortFunction(unittest.TestCase):
             '20, 32, 37, 1, 12, 27, 35, 3, 34, 9, 38, 28, 39, 2, 29, 23, 14, 33, 31, 21, 17, 15, 88, 23, 23, 38, 2, '
             '31, 15, 35, 13, 34, 38, 39, 21, 88, 32, 34, 9, 21, 88, 11, 3, 21], "price": [4, 1, 6, 5, 3, 3, 7, 7, 5, '
             '2, 3, 4, 8, 2, 3, 4, 1, 4, 7, 9, 8, 1, 6, 2, 8, 9, 7, 6, 8, 6, 8, 4, 5, 5, 4, 2, 6, 5, 9, 9, 2, 9, 3, 9, '
-            '4, 2, 5, 1, 2, 3, 9, 9, 7, 7, 9, 2, 2, 2, 5, 7]}}',
-            '8', '110',
+            '4, 2, 5, 1, 2, 3, 9, 9, 7, 7, 9, 2, 2, 2, 5, 7]}}', '8', '110',
             '[[7, 30, 31, 25, 8], [28, 33, 4, 26, 6], [18, 25, 38, 20, 31, 14], [11, 20, 32, 6, 15], [32, 7, 20, 11, '
             '3], [16, 20, 3, 34, 11, 6, 38], [9, 38, 35, 18, 3, 30, 11], [13, 11, 23, 24, 3, 21, 35], [16, 20, 30, '
             '10, 32], [3, 8, 16, 32, 6, 22, 38], [9, 20, 2, 24, 37, 35, 28], [23, 6, 9, 32, 88], [35, 37, 20, 14, 11, '
@@ -74,7 +73,7 @@ class TestSortFunction(unittest.TestCase):
 
         self.assertEqual(2, length, "The length of the path should be 2.")
 
-    def test_path_test_file1_alternative(self):
+    def test_graph_and_path_test_file1_alternative(self):
         peking1 = load_peking_from_file(self.file1_alternative)
         graph = peking1.pekingMap
 
@@ -89,6 +88,13 @@ class TestSortFunction(unittest.TestCase):
         self.assertEqual(5, peking1.budget, "Peking budget should be 5.")
         self.assertEqual(5, length, "The length of the path should be 5.")
 
+    def test_path_length_test_file2(self):
+        peking2 = load_peking_from_file(self.file2)
+
+        length = peking2.get_path_length()
+
+        self.assertEqual(8, length, "The length of the path should be 8.")
+
     def test_can_initialize_graph_test_file2(self):
         peking2 = load_peking_from_file(self.file2)
         graph = peking2.pekingMap
@@ -101,6 +107,13 @@ class TestSortFunction(unittest.TestCase):
         self.assertEqual(set(vertices), {1, 2, 3, 4, 5, 6, 7, 8, 9, 88},
                          "Graph should contain vertices [1, 2, 3, 4, 5, 6, 7, 8, 9, 88].")
         self.assertEqual(set(critical_vertices_indices), {3, 6, 7}, "Graph should contain critical vertices [7, 6, 3]")
+
+    def test_path_length_test_file3(self):
+        peking3 = load_peking_from_file(self.file3)
+
+        length = peking3.get_path_length()
+
+        self.assertEqual(2, length, "The length of the path should be 2.")
 
     def test_can_initialize_graph_test_file3(self):
         peking3 = load_peking_from_file(self.file3)
@@ -115,6 +128,13 @@ class TestSortFunction(unittest.TestCase):
                          "Graph should contain vertices [1, 2, 3, 4, 5, 6, 7, 8, 9, 88].")
         self.assertEqual(set(critical_vertices_indices), {8, 9, 4, 2}, "Graph should contain critical vertices [8, 9, "
                                                                        "4, 2]")
+
+    def test_path_length_test_file4(self):
+        peking4 = load_peking_from_file(self.file4)
+
+        length = peking4.get_path_length()
+
+        self.assertEqual(7, length, "The length of the path should be 7.")
 
     def test_can_initialize_graph_test_file4(self):
         peking3 = load_peking_from_file(self.file4)
