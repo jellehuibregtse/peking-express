@@ -24,9 +24,6 @@ class PekingExpress:
 
         self.solve()
 
-        if self.character.path[-1] == 88:
-            print(self.character.path)
-
     def updated_occupied_locations(self):
         """
         After every move of your own, update the currently occupied locations, by adding your move.
@@ -102,6 +99,14 @@ class PekingExpress:
             self.character.path += [n]
             self.updated_occupied_locations()
             self.currentTurn += 1
+
+    def get_path(self):
+        return self.character.path
+
+
+def read_file(path: str) -> list[str]:
+    with open(path, 'r', encoding='utf8') as file:
+        return file.read().split('\n')
 
 
 def init_map(json_map):
