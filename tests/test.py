@@ -57,6 +57,7 @@ class TestSortFunction(unittest.TestCase):
 
     def test_can_initialize_graph_test_file1(self):
         peking1 = load_peking_from_file(self.file1)
+        peking1.solve()
         graph = peking1.pekingMap
 
         vertices = list(graph.get_vertices())
@@ -68,13 +69,24 @@ class TestSortFunction(unittest.TestCase):
 
     def test_path_length_test_file1(self):
         peking1 = load_peking_from_file(self.file1)
+        peking1.solve()
 
         length = peking1.get_path_length()
 
         self.assertEqual(2, length, "The length of the path should be 2.")
 
+    def test_no_budget_test_file1(self):
+        peking1 = load_peking_from_file(self.file1)
+        peking1.budget = 0
+        peking1.solve()
+
+        print(peking1.get_path())
+
+        self.assertEqual(0, peking1.budget, "Budget should be 0.")
+
     def test_graph_and_path_test_file1_alternative(self):
         peking1 = load_peking_from_file(self.file1_alternative)
+        peking1.solve()
         graph = peking1.pekingMap
 
         vertices = list(graph.get_vertices())
@@ -90,6 +102,7 @@ class TestSortFunction(unittest.TestCase):
 
     def test_path_length_test_file2(self):
         peking2 = load_peking_from_file(self.file2)
+        peking2.solve()
 
         length = peking2.get_path_length()
 
@@ -97,6 +110,8 @@ class TestSortFunction(unittest.TestCase):
 
     def test_can_initialize_graph_test_file2(self):
         peking2 = load_peking_from_file(self.file2)
+        peking2.solve()
+
         graph = peking2.pekingMap
 
         vertices = list(graph.get_vertices())
@@ -110,6 +125,7 @@ class TestSortFunction(unittest.TestCase):
 
     def test_path_length_test_file3(self):
         peking3 = load_peking_from_file(self.file3)
+        peking3.solve()
 
         length = peking3.get_path_length()
 
@@ -117,6 +133,8 @@ class TestSortFunction(unittest.TestCase):
 
     def test_can_initialize_graph_test_file3(self):
         peking3 = load_peking_from_file(self.file3)
+        peking3.solve()
+
         graph = peking3.pekingMap
 
         vertices = list(graph.get_vertices())
@@ -131,14 +149,17 @@ class TestSortFunction(unittest.TestCase):
 
     def test_path_length_test_file4(self):
         peking4 = load_peking_from_file(self.file4)
+        peking4.solve()
 
         length = peking4.get_path_length()
 
         self.assertEqual(7, length, "The length of the path should be 7.")
 
     def test_can_initialize_graph_test_file4(self):
-        peking3 = load_peking_from_file(self.file4)
-        graph = peking3.pekingMap
+        peking4 = load_peking_from_file(self.file4)
+        peking4.solve()
+
+        graph = peking4.pekingMap
 
         vertices = list(graph.get_vertices())
         critical_vertices = graph.get_critical_vertices()
