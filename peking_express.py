@@ -107,11 +107,6 @@ class PekingExpress:
         return len(self.get_path())
 
 
-def read_file(path: str) -> list[str]:
-    with open(path, 'r', encoding='utf8') as file:
-        return file.read().split('\n')
-
-
 def init_map(json_map):
     """
     Initialize graph from JSON map.
