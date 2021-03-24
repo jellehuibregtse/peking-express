@@ -139,6 +139,11 @@ Start the server.
 uvicorn main:app --reload
 ```
 
+Or you can use the CLI.
+```commandline
+python cli.py solve <path>
+```
+
 ## License
 
 This project is licensed under the [MIT](https://opensource.org/licenses/MIT) license.
