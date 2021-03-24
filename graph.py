@@ -50,7 +50,12 @@ class Graph:
         vertex = self.get_vertex(u)
         vertex.set_critical(critical)
 
-    def print_graph(self):
+    def print_graph(self) -> str:
+        result = ''
         for u in self.vertices:
-            print(u, "->",
-                  " -> ".join(str(f"{v}({self.vertices[u].neighbours[v]})") for v in self.vertices[u].neighbours))
+            result += str(u)
+            result += " -> "
+            result += " -> ".join(str(f"{v}({self.vertices[u].neighbours[v]})") for v in self.vertices[u].neighbours)
+            result += "\n"
+
+        return result

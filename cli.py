@@ -13,8 +13,7 @@ def solve_peking(path: str) -> list:
     file = read_file(path)
     peking = peking_express.PekingExpress(json.loads(file[0]), int(file[1]), int(file[2]), ast.literal_eval(file[3]))
     peking.solve()
-    path = peking.get_path()
-    return [path, (timer() - start)]
+    return [peking, (timer() - start)]
 
 
 def read_file(path: str) -> list:
@@ -32,15 +31,23 @@ def main():
 
 @main.command()
 @click.argument('path')
-def solve(path: str):
+@click.option('--io/--no-io', default=False)
+def solve(path: str, io):
     """
     This returns the optimal path in Peking Express given a file.
     """
     f = Figlet(font='big')
-    click.echo(f.renderText('PEKING'))
-
     result = solve_peking(path)
-    click.echo(f'It took {result[1]} seconds to find path: {result[0]}, using file: \n{path}')
+
+    if io:
+        click.echo(f.renderText('PEKING'))
+        click.echo('INPUT')
+        click.echo(f'Graph:\n{result[0].pekingMap.print_graph()}')
+        click.echo(f'Critical vertices: {[i.index for i in result[0].pekingMap.get_critical_vertices()]}')
+        click.echo(f'Starting vertex: {result[0].startLocation}')
+
+        click.echo('\nOUTPUT')
+    click.echo(f'It took {result[1]} seconds to find path: {result[0].get_path()}, using file: \n{path}')
 
 
 if __name__ == "__main__":

@@ -19,6 +19,7 @@ class PekingExpress:
         """
         self.pekingMap = init_map(json_map)
         self.character = Character(s)
+        self.startLocation = s
         self.budget = b
         self.occupiedLocations = o
 
