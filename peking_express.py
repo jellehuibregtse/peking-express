@@ -93,7 +93,7 @@ class PekingExpress:
         while self.character.path[-1] != 88:
             n = self.next_move()
             if n is None:
-                print('Error: no solution found.')
+                self.character.path += ['Error: Could not find full path (budget does not suffice or unreachable).']
                 break
             self.character.path += [n]
             self.updated_occupied_locations()
