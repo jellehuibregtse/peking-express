@@ -59,11 +59,12 @@ class PekingExpress:
         :param turn: current turn
         :param path: current path
         :param spent: what part of the budget has already been used.
-        :return: list of all solutions
+        :return: best solution, considering length first, then the budget
         """
 
         # If destination reached, add path and amount spent to solutions.
         if path[-1] == 88 and spent < self.budget:
+            # check if the solution is better, if so, update solution
             if solution[1] is None or len(path) < len(solution[1]) or (
                     len(solution[1]) == len(path) and solution[0] > spent):
                 solution = (spent, path)
