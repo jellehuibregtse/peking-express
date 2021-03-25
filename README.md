@@ -133,15 +133,9 @@ Then, install all Python requirements.
 pip install -r requirements.txt 
 ```
 
-Start the server.
-
-```
-uvicorn main:app --reload
-```
-
-Or you can use the CLI.
+Then use the CLI to solve (Note that `<path>` is the path to the test file).
 ```commandline
-python cli.py solve <path>
+python cli.py solve --io <path>
 ```
 
 ## License

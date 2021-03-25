@@ -1,4 +1,2 @@
-fastapi~=0.63.0
-uvicorn[standard]
 click~=7.1.2
 pyfiglet~=0.8.post1

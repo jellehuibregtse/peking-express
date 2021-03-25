@@ -9,9 +9,9 @@ import peking_express
 
 
 def solve_peking(path: str) -> list:
-    start = timer()
     file = read_file(path)
     peking = peking_express.PekingExpress(json.loads(file[0]), int(file[1]), int(file[2]), ast.literal_eval(file[3]))
+    start = timer()
     peking.solve()
     return [peking, (timer() - start)]
 
